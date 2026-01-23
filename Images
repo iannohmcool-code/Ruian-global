@@ -1,1 +1,30 @@
+<!-- HERO / LOGO SECTION -->
+<div class="hero">
+  <img src="images/hero.png" alt="Ruian Global Logo">
+</div>
 
+<!-- MAIN POSTER SECTION -->
+<div class="poster">
+  <img src="images/poster.jpg" alt="Ruian Global Poster">
+</div>
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #000;
+    text-align: center;
+  }
+
+  .hero img {
+    width: 90%;
+    max-width: 350px;
+    margin-top: 20px;
+  }
+
+  .poster img {
+    width: 95%;
+    max-width: 500px;
+    margin: 30px auto;
+    border-radius: 10px;
+  }
+</style>
