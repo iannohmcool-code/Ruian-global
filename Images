@@ -1,1 +1,9 @@
+<!-- HERO / LOGO SECTION -->
+<div class="hero">
+  <img src="images/hero.png" alt="Ruian Global Logo">
+</div>
 
+<!-- MAIN POSTER SECTION -->
+<div class="poster">
+  <img src="images/poster.jpg" alt="Ruian Global Poster">
+</div>
