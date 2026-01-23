@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ruian Global | Learn, Earn, Prosper</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #000;
+      color: #fff;
+      text-align: center;
+    }
+
+    /* HERO LOGO SECTION */
+    .hero {
+      padding: 20px 10px;
+      background-color: #000;
+    }
+
+    .hero img {
+      width: 90%;
+      max-width: 350px;
+    }
+
+    /* POSTER SECTION */
+    .poster {
+      padding: 20px 10px;
+    }
+
+    .poster img {
+      width: 95%;
+      max-width: 500px;
+      border-radius: 12px;
+    }
+
+    /* TEXT SECTION */
+    .content {
+      padding: 20px;
+    }
+
+    .content h1 {
+      color: #00ffd5;
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .content p {
+      font-size: 16px;
+      line-height: 1.6;
+      color: #ccc;
+    }
+
+    /* WHATSAPP BUTTON */
+    .whatsapp {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #25d366;
+      color: white;
+      padding: 14px 18px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- LOGO / BADGE IMAGE -->
+  <div class="hero">
+    <img src="images/hero.png" alt="Ruian Global Logo">
+  </div>
+
+  <!-- POSTER IMAGE -->
+  <div class="poster">
+    <img src="images/poster.jpg" alt="Build Your Tomorrow">
+  </div>
+
+  <!-- ABOUT SECTION -->
+  <div class="content">
+    <h1>Welcome to Ruian Global</h1>
+    <p>
+      Ruian Global is a digital platform built to help you learn smart skills,
+      earn online, and grow financially.  
+      We believe in building a better tomorrow through knowledge, innovation,
+      and opportunity.
+    </p>
+  </div>
+
+  <!-- WHATSAPP BUTTON -->
+  <a class="whatsapp" href="https://wa.me/254748121890" target="_blank">
+    WhatsApp Us
+  </a>
+
+</body>
+</html>
