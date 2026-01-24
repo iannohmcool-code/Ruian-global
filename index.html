@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ruian Global | Learn • Earn • Grow</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Ruian Global empowers students, hustlers, freelancers, and entrepreneurs with skills, earning strategies, and digital opportunities.">
+<meta name="keywords" content="earn online, freelancing, students, business ideas, PayPal, sponsorship, blogging">
+
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+crossorigin="anonymous"></script>
+
+<style>
+:root{
+ --bg:#0b0b0b;
+ --bg-light:#f5f5f5;
+ --card:#151515;
+ --card-light:#ffffff;
+ --accent:#00c3ff;
+ --text:#ffffff;
+ --text-light:#111111;
+ --hover:#ffd700;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);}
+body.light{background:var(--bg-light);color:var(--text-light);}
+header{padding:15px;text-align:center;position:relative;border-bottom:1px solid #222;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;}
+marquee{color:var(--accent);font-weight:bold;width:70%;}
+.settings{cursor:pointer;position:relative;margin-left:15px;}
+.settings img{width:24px;height:24px;}
+.settings-menu{display:none;position:absolute;top:30px;right:0;background:var(--card);border-radius:8px;padding:10px;z-index:10;width:180px;}
+.settings-menu label{display:block;margin:5px 0;color:var(--accent);cursor:pointer;}
+input[type="checkbox"]{margin-right:5px;}
+select{margin-top:5px;width:100%;border-radius:5px;padding:4px;}
+.search-box{position:relative;margin-right:10px;}
+.search-box input{padding:6px 10px;border-radius:20px;border:none;width:200px;outline:none;}
+section{padding:20px;display:none;}
+section.active{display:block;}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:15px;margin-top:20px;}
+.card{background:var(--card);padding:20px;border-radius:16px;text-align:center;cursor:pointer;transition:.3s;}
+body.light .card{background:var(--card-light);}
+.card:hover{transform:translateY(-5px);background:linear-gradient(135deg,#00c3ff,#ffd700);}
+.card img{width:28px;height:28px;margin-bottom:10px;}
+.sub-tab{margin-top:15px;}
+.sub-tab button{margin:5px;padding:8px 12px;border-radius:20px;border:none;background:var(--accent);color:#000;font-weight:bold;cursor:pointer;}
+.sub-tab button:hover{background:var(--hover);color:#000;}
+.sub-content{display:none;margin-top:15px;}
+.ads-box{background:#111;padding:15px;border:1px dashed #444;text-align:center;margin:20px 0;}
+body.light .ads-box{background:#ddd;border-color:#aaa;}
+footer{background:#111;padding:20px;text-align:center;margin-bottom:60px;}
+body.light footer{background:#ddd;color:#111;}
+footer a{color:var(--accent);margin:0 10px;text-decoration:none;}
+ul{margin-left:20px;line-height:1.6;}
+h3{margin-bottom:10px;}
+h4{margin-top:10px;margin-bottom:5px;}
+nav.bottom-nav{position:fixed;bottom:0;left:0;width:100%;background:#111;display:flex;justify-content:space-around;padding:10px 0;border-top:1px solid #333;z-index:1000;}
+body.light nav.bottom-nav{background:#ddd;}
+nav.bottom-nav button{background:none;border:none;color:var(--accent);font-weight:bold;font-size:12px;}
+nav.bottom-nav button.active{color:var(--hover);}
+.paypal-btn{background:#ffc439;color:#000;padding:12px 22px;border-radius:25px;text-decoration:none;font-weight:bold;display:inline-block;margin-top:15px;}
+.accordion{background:var(--card);color:var(--text);cursor:pointer;padding:12px 18px;margin:5px 0;border:none;text-align:left;outline:none;font-size:16px;transition:0.3s;border-radius:8px;}
+body.light .accordion{background:var(--card-light);color:var(--text-light);}
+.activeAcc, .accordion:hover{background:var(--hover);color:#000;}
+.panel{padding:0 18px;display:none;background-color:var(--card);overflow:hidden;margin-bottom:5px;border-radius:8px;}
+body.light .panel{background-color:var(--card-light);}
+</style>
+</head>
+<body>
+
+<header>
+<marquee>Welcome to Ruian Global — Learn Skills • Earn Online • Build Your Future</marquee>
+
+<div style="display:flex;align-items:center;">
+<div class="search-box">
+<input type="text" id="searchInput" placeholder="Search...">
+</div>
+<div class="settings" onclick="toggleSettingsMenu()">
+<img src="icons/settings.png" alt="settings">
+<div class="settings-menu" id="settingsMenu">
+<label><input type="checkbox" id="themeToggle"> Dark/Light Theme</label>
+<label><input type="checkbox" id="notificationsToggle"> Notifications</label>
+<label>Language: 
+<select id="languageSelect">
+<option value="en">English</option>
+<option value="sw">Kiswahili</option>
+</select>
+</label>
+</div>
+</div>
+</div>
+</header>
+
+<!-- HOME -->
+<section id="home" class="active">
+<h3>🏠 Home</h3>
+<p>Welcome to Ruian Global, your ultimate platform for learning, earning, and growing financially. Every section here provides detailed strategies, real examples, and actionable steps for students, freelancers, hustlers, and entrepreneurs.</p>
+
+<div class="card-grid">
+<div class="card" onclick="openTab('earning')"><img src="icons/earn.png" alt="">Earning</div>
+<div class="card" onclick="openTab('education')"><img src="icons/education.png" alt="">Education</div>
+<div class="card" onclick="openTab('ideas')"><img src="icons/ideas.png" alt="">Ideas</div>
+<div class="card" onclick="openTab('blog')"><img src="icons/blog.png" alt="">Blog</div>
+<div class="card" onclick="openTab('store')"><img src="icons/store.png" alt="">Store</div>
+<div class="card" onclick="openTab('testimonials')">💬 Testimonials</div>
+<div class="card" onclick="openTab('faq')">❓ FAQ</div>
+<div class="card" onclick="openTab('contact')">📞 Contact</div>
+</div>
+
+<div class="ads-box">Google AdSense Advertisement Area</div>
+</section>
+
+<!-- EARNING -->
+<section id="earning">
+<h3>💰 Earning Strategies</h3>
+
+<div class="sub-tab">
+<button onclick="showSubTab('students')">Students</button>
+<button onclick="showSubTab('hustlers')">Hustlers & Freelancers</button>
+<button onclick="showSubTab('professionals')">Professionals</button>
+<button onclick="showSubTab('entrepreneurs')">Entrepreneurs</button>
+<button onclick="openTab('home')">🏠 Back Home</button>
+</div>
+
+<div id="students" class="sub-content">
+<h4>Students</h4>
+<ul>
+<li>Create logos using Canva and sell on Fiverr.</li>
+<li>Sell class notes, summaries, or digital guides via WhatsApp/Telegram.</li>
+<li>Content creation for blogs, YouTube, or TikTok for niche audiences.</li>
+<li>App testing or microtasks on Appen or Toloka for extra cash.</li>
+<li>Step-by-step: Learn skill → Build portfolio → Join Fiverr/Upwork → Start earning.</li>
+</ul>
+</div>
+
+<div id="hustlers" class="sub-content">
+<h4>Hustlers & Freelancers</h4>
+<ul>
+<li>Freelance services: writing, graphic design, video editing, voiceovers.</li>
+<li>Social media management for small businesses.</li>
+<li>Reselling trending products through Instagram or WhatsApp.</li>
+<li>Website setup services using GitHub Pages or WordPress.</li>
+<li>Step-by-step: Identify demand → Offer service → Market online → Collect payments.</li>
+</ul>
+</div>
+
+<div id="professionals" class="sub-content">
+<h4>Professionals & Unemployed</h4>
+<ul>
+<li>Freelancing platforms like Fiverr and Upwork for specialized services.</li>
+<li>Start small online businesses or side hustles.</li>
+<li>Invest in micro ventures or stocks.</li>
+</ul>
+</div>
+
+<div id="entrepreneurs" class="sub-content">
+<h4>Entrepreneurs & Investors</h4>
+<ul>
+<li>Monetize blogs with Google AdSense.</li>
+<li>Affiliate marketing: Amazon, Jumia, or local digital products.</li>
+<li>Create paid courses, mentorship programs, or private groups.</li>
+<li>Invest in small-scale online ventures or digital assets.</li>
+</ul>
+<a class="paypal-btn" href="https://www.paypal.me/iannohmcool">💰 Support / Sponsor via PayPal</a>
+</div>
+
+<div class="ads-box">AdSense High-Value Placement</div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+<h3>📚 Education & Skills</h3>
+<h4>Students</h4>
+<ul>
+<li>Learn graphic design, coding basics, digital marketing, finance fundamentals.</li>
+<li>Use platforms like Coursera, FreeCodeCamp, Khan Academy.</li>
+<li>Combine academic knowledge with practical online skills to earn money.</li>
+</ul>
+<h4>Hustlers & Side-hustlers</h4>
+<ul>
+<li>Short skill-based courses to improve freelancing services.</li>
+<li>Digital marketing to grow small businesses online.</li>
+<li>YouTube tutorials and free tools to upgrade daily skills.</li>
+</ul>
+<h4>Unemployed & Professionals</h4>
+<ul>
+<li>Learn investments, business analytics, leadership, and management.</li>
+<li>Upskill using online certifications to increase side income or employability.</li>
+<li>Focus on professional skills: analytics, project management, finance.</li>
+</ul>
+<h4>Entrepreneurs & Investors</h4>
+<ul>
+<li>Advanced courses in marketing, finance, business strategy, and scaling online.</li>
+<li>Research business trends and digital opportunities.</li>
+<li>Invest in online education to improve offerings and revenue.</li>
+</ul>
+</section>
+
+<!-- IDEAS -->
+<section id="ideas">
+<h3>💡 Business & Income Ideas</h3>
+<h4>Students</h4>
+<ul>
+<li>Sell study guides, notes, digital templates.</li>
+<li>Create YouTube or TikTok content for niche audiences.</li>
+<li>Offer tutoring or mentorship online.</li>
+</ul>
+<h4>Hustlers</h4>
+<ul>
+<li>Resell products via social media or online marketplaces.</li>
+<li>Offer microservices: design, content creation, digital marketing.</li>
+<li>Launch small online courses or coaching sessions.</li>
+</ul>
+<h4>Entrepreneurs & Investors</h4>
+<ul>
+<li>Develop apps, e-commerce stores, or SaaS products.</li>
+<li>Invest in proven online businesses.</li>
+<li>Create paid online communities and mentorship programs.</li>
+</ul>
+</section>
+
+<!-- STORE -->
+<section id="store">
+<h3>🛒 Store</h3>
+<div class="card-grid">
+<div class="card">
+<h4>Logo Design Service</h4>
+<p>Custom logos for brands and individuals.</p>
+<a class="paypal-btn" href="https://www.paypal.me/iannohmcool">Buy Now</a>
+</div>
+<div class="card">
+<h4>Digital Notes & Guides</h4>
+<p>Study material for students ready to download.</p>
+<a class="paypal-btn" href="https://www.paypal.me/iannohmcool">Buy Now</a>
+</div>
+<div class="card">
+<h4>Mini Tutorials</h4>
+<p>Short courses for skill development.</p>
+<a class="paypal-btn" href="https://www.paypal.me/iannohmcool">Buy Now</a>
+</div>
+</div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+<h3>❓ FAQ</h3>
+<button class="accordion">What is freelancing?</button>
+<div class="panel"><p>Freelancing is providing services online independently without long-term commitment to one employer. Platforms like Fiverr and Upwork help freelancers find clients.</p></div>
+
+<button class="accordion">How do I get paid?</button>
+<div class="panel"><p>Payments can be received through PayPal, bank transfer, or other payment platforms depending on service or product.</p></div>
+
+<button class="accordion">Can I sell my notes?</button>
+<div class="panel"><p>Yes! Students can sell digital notes or guides using WhatsApp, Instagram, or Store tab with PayPal integration.</p></div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+<h3>📞 Contact</h3>
+<ul>
+<li>WhatsApp: <a href="https://wa.me/254712249656">0712249656</a></li>
+<li>Email: <a href="mailto:iannohmcool@gmail.com">iannohmcool@gmail.com</a></li>
+<li>Instagram: <a href="#">@ruian-global</a></li>
+</ul>
+</section>
+
+<footer>
+<p>© 2026 Ruian Global</p>
+<a href="https://wa.me/254712249656">WhatsApp</a>
+<a href="mailto:iannohmcool@gmail.com">Email</a>
+<a href="#">Instagram</a>
+</footer>
+
+<nav class="bottom-nav">
+<button onclick="openTab('faq')">❓ FAQ</button>
+<button onclick="openTab('contact')">📞 Help / Contact</button>
+</nav>
+
+<script>
+// Settings menu toggle
+function toggleSettingsMenu(){
+ let menu = document.getElementById('settingsMenu');
+ menu.style.display = (menu.style.display==='block')?'none':'block';
+}
+// Theme toggle
+document.getElementById('themeToggle').addEventListener('change', function(){
+ document.body.classList.toggle('light');
+});
+// Sub-tabs for earning
+function showSubTab(id){
+ document.querySelectorAll('.sub-content').forEach(s=>s.style.display='none');
+ document.getElementById(id).style.display='block';
+}
+// Main tab switch
+function openTab(id){
+ document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+}
+// Accordion
+var acc = document.getElementsByClassName("accordion");
+for (let i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("activeAcc");
+    var panel = this.nextElementSibling;
+    if (panel.style.display === "block") {panel.style.display = "none";}
+    else {panel.style.display = "block";}
+  });
+}
+// Search function
+document.getElementById('searchInput').addEventListener('keyup', function(){
+ let filter = this.value.toLowerCase();
+ document.querySelectorAll('section').forEach(section=>{
+   if(section.textContent.toLowerCase().includes(filter)){section.style.display='block';}
+   else{section.style.display='none';}
+ });
+});
+</script>
+
+</body>
+</html>
