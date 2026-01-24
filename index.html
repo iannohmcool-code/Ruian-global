@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ruian Global - Website</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+:root {
+    --bg-color:#0b0b0b;
+    --text-color:white;
+    --card-bg:#222;
+    --accent:#00c3ff;
+}
+body {
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:var(--bg-color);
+    color:var(--text-color);
+    scroll-behavior: smooth;
+}
+
+/* NAVIGATION BAR */
+nav{
+    position:sticky;
+    top:0;
+    background:#111;
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    padding:10px 0;
+    z-index:100;
+    box-shadow:0 2px 5px rgba(0,0,0,0.5);
+}
+nav a{
+    color:var(--accent);
+    text-decoration:none;
+    font-weight:bold;
+    font-size:16px;
+}
+nav a:hover{color:#ffd700;}
+
+/* SECTIONS */
+section{
+    padding:50px 20px;
+    border-bottom:1px solid #333;
+}
+section h2{
+    font-size:28px;
+    margin-bottom:20px;
+}
+
+/* CARDS (EARNING SECTION) */
+.cards-container{
+    display:flex;
+    overflow-x:auto;
+    gap:15px;
+    padding-bottom:15px;
+}
+.cards-container::-webkit-scrollbar{display:none;}
+.card{
+    flex:0 0 250px;
+    background:var(--card-bg);
+    border-radius:15px;
+    padding:15px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    opacity:0;
+    transform:translateY(20px);
+    transition:transform 0.5s, opacity 0.5s;
+}
+.card.show{opacity:1; transform:translateY(0);}
+.card img{width:50px; height:50px; margin-bottom:8px;}
+.card p{margin:0;}
+.card a.resource-btn{
+    padding:6px 12px;
+    background:var(--accent);
+    color:black;
+    border-radius:8px;
+    font-weight:bold;
+    text-align:center;
+    font-size:14px;
+}
+.card a.resource-btn:hover{background:#00a3cc;}
+
+/* WHATSAPP BUTTON */
+.fab{
+    position:fixed;
+    bottom:25px;
+    right:25px;
+    background:#25d366;
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:30px;
+    color:white;
+    cursor:pointer;
+    box-shadow:0 4px 6px rgba(0,0,0,0.4);
+}
+
+/* BACK TO TOP BUTTON */
+.back-top{
+    display:block;
+    margin:20px auto;
+    padding:12px 25px;
+    background:var(--accent);
+    color:black;
+    border:none;
+    border-radius:12px;
+    font-weight:bold;
+    cursor:pointer;
+}
+.back-top:hover{background:#00a3cc;}
+
+/* DARK/LIGHT TOGGLE */
+.toggle-btn{
+    position:fixed;
+    top:15px;
+    right:20px;
+    padding:6px 12px;
+    background:var(--accent);
+    color:black;
+    border-radius:12px;
+    font-weight:bold;
+    cursor:pointer;
+    z-index:100;
+}
+</style>
+</head>
+<body>
+
+<!-- Dark/Light mode toggle -->
+<button class="toggle-btn" onclick="toggleTheme()">🌞/🌙</button>
+
+<!-- Navigation Tabs -->
+<nav>
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#earning">Earning</a>
+    <a href="#education">Education</a>
+    <a href="#ideas">Ideas</a>
+    <a href="#help">Help</a>
+</nav>
+
+<!-- Home / Introduction -->
+<section id="home">
+<h2>🏠 Welcome to Ruian Global</h2>
+<img src="images/logo.png" alt="Ruian Global Logo" width="150">
+<p>Welcome to Ruian Global! We provide online services, earning guides, educational resources, and innovative ideas to help you succeed. Scroll down to explore our offerings.</p>
+</section>
+
+<!-- About -->
+<section id="about">
+<h2>ℹ️ About Us</h2>
+<p>Ruian Global is committed to empowering students and young entrepreneurs. Our mission is to provide practical knowledge, online earning strategies, and business ideas that work in the real world.</p>
+</section>
+
+<!-- Services -->
+<section id="services">
+<h2>🛠 Services</h2>
+<p>We offer:</p>
+<ul>
+<li>Online business guidance</li>
+<li>Freelancing tips and tutorials</li>
+<li>Educational content and courses</li>
+<li>Monetization strategies</li>
+</ul>
+</section>
+
+<!-- Earning Section (Mini-App Cards) -->
+<section id="earning">
+<h2>💰 Earning Online</h2>
+<div class="cards-container" id="earningCards">
+<div class="card">
+  <img src="images/earning.png" alt="Earning">
+  <p>Freelancing: Writing, design, social media</p>
+  <a href="https://www.fiverr.com/" target="_blank" class="resource-btn">Fiverr</a>
+</div>
+<div class="card">
+  <img src="images/resell.png" alt="Reselling">
+  <p>Reselling products via WhatsApp/Facebook Marketplace</p>
+</div>
+<div class="card">
+  <img src="images/content.png" alt="Content Creation">
+  <p>Content creation: TikTok, YouTube, Facebook</p>
+</div>
+</div>
+</section>
+
+<!-- Education -->
+<section id="education">
+<h2>📚 Education & Skills</h2>
+<div class="cards-container" id="educationCards">
+<div class="card">
+  <img src="images/education.png" alt="Education">
+  <p>Digital marketing courses</p>
+  <a href="https://www.coursera.org/" target="_blank" class="resource-btn">Coursera</a>
+</div>
+<div class="card">
+  <img src="images/coding.png" alt="Coding">
+  <p>Learn coding</p>
+  <a href="https://www.freecodecamp.org/" target="_blank" class="resource-btn">FreeCodeCamp</a>
+</div>
+</div>
+</section>
+
+<!-- Ideas -->
+<section id="ideas">
+<h2>💡 Business & Income Ideas</h2>
+<div class="cards-container" id="ideasCards">
+<div class="card">
+  <img src="images/shop.png" alt="Online Shop">
+  <p>Start a small online shop selling trending items</p>
+</div>
+<div class="card">
+  <img src="images/group.png" alt="Paid Guidance Group">
+  <p>Create a paid guidance group via WhatsApp/Facebook</p>
+</div>
+</div>
+</section>
+
+<!-- Help / Contact -->
+<section id="help">
+<h2>📞 Contact & Help</h2>
+<p>Contact us anytime via WhatsApp: <a href="https://wa.me/0712249656">0712249656</a></p>
+<p>Email: info@ruian-global.com</p>
+<p>We are here to help you succeed with your online business and learning journey!</p>
+</section>
+
+<!-- Back to Top -->
+<button class="back-top" onclick="window.scrollTo({top:0, behavior:'smooth'})">⬆ Back to Top</button>
+
+<!-- WhatsApp Floating Button -->
+<a href="https://wa.me/0712249656" target="_blank" class="fab">💬</a>
+
+<script>
+// Dark/Light Mode Toggle
+function toggleTheme(){
+    if(document.body.style.background==='white'){
+        document.body.style.background='#0b0b0b'; document.body.style.color='white';
+        document.documentElement.style.setProperty('--card-bg','#222');
+        document.documentElement.style.setProperty('--accent','#00c3ff');
+    } else {
+        document.body.style.background='white'; document.body.style.color='black';
+        document.documentElement.style.setProperty('--card-bg','#ddd');
+        document.documentElement.style.setProperty('--accent','#ff5722');
+    }
+}
+
+// Animate Cards on Load
+window.onload = () => {
+    ['earningCards','educationCards','ideasCards'].forEach(id=>animateCards(id));
+};
+
+function animateCards(containerId){
+    const cards=document.getElementById(containerId).querySelectorAll('.card');
+    cards.forEach((card,i)=>setTimeout(()=>{card.classList.add('show');},i*200));
+}
+</script>
+
+</body>
+</html>
