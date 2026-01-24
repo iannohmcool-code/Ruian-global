@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ruian Global App-Style Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+:root {
+    --bg-color:#0b0b0b;
+    --text-color:white;
+    --accent:#00c3ff;
+    --card-bg:#222;
+    --card-hover:#00a3cc;
+}
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:var(--bg-color);
+    color:var(--text-color);
+}
+main{
+    padding-bottom:90px; /* space for bottom nav */
+}
+section{
+    padding:20px;
+    display:none;
+}
+section.active{
+    display:block;
+}
+h2{
+    margin-top:0;
+}
+
+/* Home Dashboard Grid */
+#homeTopics{
+    display:none;
+    margin-top:20px;
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap:15px;
+}
+.card-btn{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    padding:20px;
+    border-radius:15px;
+    background:var(--card-bg);
+    border:none;
+    font-size:18px;
+    color:white;
+    cursor:pointer;
+    transition:background 0.3s, transform 0.2s;
+    text-align:center;
+}
+.card-btn:hover{
+    background:var(--card-hover);
+    transform:translateY(-3px);
+}
+.card-btn span.icon{
+    font-size:36px;
+}
+
+/* Bottom nav */
+nav.bottom-nav{
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    background:#111;
+    display:flex;
+    justify-content:space-around;
+    padding:12px 0;
+    border-top:1px solid #333;
+}
+nav.bottom-nav button{
+    background:none;
+    border:none;
+    color:var(--accent);
+    font-size:18px;
+    font-weight:bold;
+}
+nav.bottom-nav button.active{
+    color:#ffd700;
+}
+
+/* internal links */
+a.internal-link{
+    color:var(--accent);
+    text-decoration:none;
+    font-weight:bold;
+}
+a.internal-link:hover{color:#ffd700;}
+</style>
+</head>
+<body>
+
+<main>
+  <!-- Home Tab -->
+  <section id="home" class="active">
+    <h2>🏠 Welcome to Ruian Global</h2>
+    <p>Your hub for Earning, Education, and Ideas!</p>
+    <button class="card-btn" onclick="showHomeTopics()"><span class="icon">➡️</span> Enter Home</button>
+    
+    <!-- Topics container hidden initially -->
+    <div id="homeTopics">
+      <button class="card-btn" onclick="showSection('earning')"><span class="icon">💰</span> Earning</button>
+      <button class="card-btn" onclick="showSection('education')"><span class="icon">📚</span> Education</button>
+      <button class="card-btn" onclick="showSection('ideas')"><span class="icon">💡</span> Ideas</button>
+    </div>
+  </section>
+
+  <!-- Earning Section -->
+  <section id="earning">
+    <h2>💰 Earning Online</h2>
+    <ul>
+      <li>Freelancing: Writing, Design, Social Media</li>
+      <li>Reselling products via WhatsApp/Facebook Marketplace</li>
+      <li>Content creation: TikTok, YouTube, Facebook</li>
+    </ul>
+    <p><a href="#" onclick="backToHomeTopics()" class="internal-link">⬅ Back to Home Topics</a></p>
+  </section>
+
+  <!-- Education Section -->
+  <section id="education">
+    <h2>📚 Education & Skills</h2>
+    <ul>
+      <li>Digital marketing courses (<a href="https://www.coursera.org/" target="_blank">Coursera</a>)</li>
+      <li>Learn coding (<a href="https://www.freecodecamp.org/" target="_blank">FreeCodeCamp</a>)</li>
+      <li>Online courses for freelancing skills</li>
+    </ul>
+    <p><a href="#" onclick="backToHomeTopics()" class="internal-link">⬅ Back to Home Topics</a></p>
+  </section>
+
+  <!-- Ideas Section -->
+  <section id="ideas">
+    <h2>💡 Business & Income Ideas</h2>
+    <ul>
+      <li>Start a small online shop selling trending items</li>
+      <li>Create a paid guidance group via WhatsApp/Facebook</li>
+      <li>Offer digital services online</li>
+    </ul>
+    <p><a href="#" onclick="backToHomeTopics()" class="internal-link">⬅ Back to Home Topics</a></p>
+  </section>
+
+  <!-- About Tab -->
+  <section id="about">
+    <h2>ℹ️ About Us</h2>
+    <p>Ruian Global is committed to empowering students and young entrepreneurs.</p>
+    <h3>Services</h3>
+    <ul>
+      <li>Online business guidance</li>
+      <li>Freelancing tips and tutorials</li>
+      <li>Educational content and courses</li>
+      <li>Monetization strategies</li>
+    </ul>
+  </section>
+
+  <!-- Help Tab -->
+  <section id="help">
+    <h2>📞 Contact & Help</h2>
+    <p>Contact us via WhatsApp: <a href="https://wa.me/0712249656">0712249656</a></p>
+    <p>Email: info@ruian-global.com</p>
+    <p>We are here to help you succeed with your online business and learning journey!</p>
+  </section>
+</main>
+
+<!-- Bottom Navigation -->
+<nav class="bottom-nav">
+  <button id="nav-home" class="active" onclick="switchTab('home')">Home</button>
+  <button id="nav-about" onclick="switchTab('about')">About</button>
+  <button id="nav-help" onclick="switchTab('help')">Help</button>
+</nav>
+
+<script>
+function switchTab(tab){
+    document.querySelectorAll('main > section').forEach(sec=>sec.classList.remove('active'));
+    document.getElementById(tab).classList.add('active');
+    document.querySelectorAll('nav.bottom-nav button').forEach(btn=>btn.classList.remove('active'));
+    document.getElementById('nav-'+tab).classList.add('active');
+    if(tab==='home'){document.getElementById('homeTopics').style.display='none';}
+}
+function showHomeTopics(){
+    document.getElementById('homeTopics').style.display='grid';
+}
+function showSection(sectionId){
+    document.querySelectorAll('#home, #earning, #education, #ideas').forEach(sec=>sec.classList.remove('active'));
+    document.getElementById(sectionId).classList.add('active');
+}
+function backToHomeTopics(){
+    document.querySelectorAll('#home, #earning, #education, #ideas').forEach(sec=>sec.classList.remove('active'));
+    document.getElementById('home').classList.add('active');
+    document.getElementById('homeTopics').style.display='grid';
+    document.querySelectorAll('nav.bottom-nav button').forEach(btn=>btn.classList.remove('active'));
+    document.getElementById('nav-home').classList.add('active');
+}
+</script>
+
+</body>
+</html>
