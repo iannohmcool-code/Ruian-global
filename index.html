@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ruian Global - Mini App</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+:root {
+    --bg-color:#0b0b0b;
+    --text-color:white;
+    --card-bg:#222;
+    --accent:#00c3ff;
+}
+body {
+    margin:0; font-family:Arial,sans-serif;
+    background:var(--bg-color); color:var(--text-color);
+    overflow-x:hidden; transition:background 0.3s, color 0.3s;
+}
+a {text-decoration:none;color:#ffd700;}
+a:hover{text-decoration:underline;}
+
+/* HEADER */
+header{
+    position:sticky; top:0; background:#000;
+    text-align:center; padding:10px 0; z-index:100;
+    box-shadow:0 2px 5px rgba(0,0,0,0.5);
+}
+header h1{color:var(--accent); margin:0; font-size:22px;}
+.toggle-btn{
+    position:absolute; top:15px; right:20px;
+    padding:6px 12px; background:var(--accent); color:black;
+    border-radius:12px; font-weight:bold; cursor:pointer;
+}
+
+/* TIP NOTIFICATION */
+.notification{
+    background:#fbbc05; color:black; text-align:center; padding:10px;
+    font-weight:bold; display:none; animation:slideDown 0.5s forwards;
+}
+@keyframes slideDown{0%{transform:translateY(-100%);}100%{transform:translateY(0);}}
+
+/* APP ICONS */
+.app-icons{
+    display:flex; justify-content:space-around; padding:15px 0;
+    background:#111;
+}
+.app-icons div{
+    display:flex; flex-direction:column; align-items:center;
+    cursor:pointer; transition:transform 0.2s;
+}
+.app-icons div:hover{transform:scale(1.1);}
+.app-icons div span{font-size:50px; margin-bottom:5px;}
+
+/* SECTION CONTAINER */
+.section-container{
+    position:relative; width:100%; height:auto;
+}
+.section{
+    position:absolute; top:0; left:100%;
+    width:100%; transition:left 0.5s;
+}
+.section.active{left:0;}
+section h2{font-size:20px; padding:10px 15px; margin:0;}
+.cards-container{
+    display:flex; overflow-x:auto; scroll-snap-type:x mandatory;
+    gap:15px; padding:15px;
+}
+.cards-container::-webkit-scrollbar{display:none;}
+.card{
+    flex:0 0 250px; background:var(--card-bg); border-radius:15px;
+    padding:15px; scroll-snap-align:start; display:flex; flex-direction:column; gap:8px;
+    opacity:0; transform:translateY(20px); transition:transform 0.5s, opacity 0.5s;
+}
+.card.show{opacity:1; transform:translateY(0);}
+.card p{margin:0;font-size:16px;}
+.card a.resource-btn{
+    padding:6px 12px; background:var(--accent); color:black;
+    border-radius:8px; font-weight:bold; text-align:center; font-size:14px;
+    transition:background 0.3s;
+}
+.card a.resource-btn:hover{background:#00a3cc;}
+
+/* PROGRESS BAR */
+.progress-bar{width:100%; height:6px; background:#333; border-radius:3px; margin:5px 0 15px 0; overflow:hidden;}
+.progress-fill{height:100%; width:0%; background:var(--accent); transition:width 0.3s;}
+
+/* BACK BUTTON */
+.back-button{
+    display:block; width:fit-content; margin:20px auto;
+    padding:12px 25px; background:var(--accent); color:black;
+    border:none; border-radius:12px; font-weight:bold; cursor:pointer;
+}
+.back-button:hover{background:#00a3cc;}
+
+/* WHATSAPP BUTTON */
+.fab{
+    position:fixed; bottom:25px; right:25px;
+    background:#25d366; width:60px; height:60px; border-radius:50%;
+    display:flex; justify-content:center; align-items:center; font-size:30px;
+    color:white; cursor:pointer; box-shadow:0 4px 6px rgba(0,0,0,0.4); z-index:100;
+    transition:transform 0.2s;
+}
+.fab:hover{transform:scale(1.1);}
+</style>
+</head>
+<body>
+
+<header>
+<h1>Ruian Global - Mini App</h1>
+<button class="toggle-btn" onclick="toggleTheme()">🌞/🌙</button>
+</header>
+
+<div class="notification" id="tipNotification">💡 Tip of the Day: Try freelancing online for quick earnings!</div>
+
+<div class="app-icons">
+<div onclick="showSection('earning')"><span>💰</span>Earning</div>
+<div onclick="showSection('education')"><span>📚</span>Education</div>
+<div onclick="showSection('ideas')"><span>💡</span>Ideas</div>
+</div>
+
+<div class="section-container">
+<section class="section" id="earning">
+<h2>💰 Earning Online</h2>
+<div class="cards-container" id="earningCards">
+<div class="card"><p>Freelancing: Writing, design, social media</p><a href="https://www.fiverr.com/" target="_blank" class="resource-btn">Fiverr</a></div>
+<div class="card"><p>Reselling products via WhatsApp/Facebook Marketplace</p></div>
+<div class="card"><p>Content creation: TikTok, YouTube, Facebook</p></div>
+</div>
+<div class="progress-bar"><div class="progress-fill" id="earningProgress"></div></div>
+</section>
+
+<section class="section" id="education">
+<h2>📚 Education & Skills</h2>
+<div class="cards-container" id="educationCards">
+<div class="card"><p>Digital marketing courses</p><a href="https://www.coursera.org/" target="_blank" class="resource-btn">Coursera</a></div>
+<div class="card"><p>Learn coding</p><a href="https://www.freecodecamp.org/" target="_blank" class="resource-btn">FreeCodeCamp</a></div>
+</div>
+<div class="progress-bar"><div class="progress-fill" id="educationProgress"></div></div>
+</section>
+
+<section class="section" id="ideas">
+<h2>💡 Business & Income Ideas</h2>
+<div class="cards-container" id="ideasCards">
+<div class="card"><p>Start a small online shop selling trending items</p></div>
+<div class="card"><p>Create a paid guidance group via WhatsApp/Facebook</p></div>
+</div>
+<div class="progress-bar"><div class="progress-fill" id="ideasProgress"></div></div>
+</section>
+</div>
+
+<button class="back-button" onclick="showSection('earning')">← Back to Earning</button>
+<a href="https://wa.me/0712249656" target="_blank" class="fab">💬</a>
+
+<script>
+/* DARK/LIGHT MODE */
+function toggleTheme(){
+    if(document.body.style.background==='white'){
+        document.body.style.background='#0b0b0b'; document.body.style.color='white';
+        document.documentElement.style.setProperty('--card-bg','#222');
+        document.documentElement.style.setProperty('--accent','#00c3ff');
+    } else {
+        document.body.style.background='white'; document.body.style.color='black';
+        document.documentElement.style.setProperty('--card-bg','#ddd');
+        document.documentElement.style.setProperty('--accent','#ff5722');
+    }
+}
+
+/* TIP NOTIFICATION */
+window.onload=()=>{
+    const tip=document.getElementById('tipNotification');
+    tip.style.display='block';
+    setTimeout(()=>{tip.style.display='none';},5000);
+
+    ['earningCards','educationCards','ideasCards'].forEach(id=>animateCards(id));
+    ['earningCards','educationCards','ideasCards'].forEach(id=>setupProgress(id,id.replace('Cards','Progress')));
+    showSection('earning'); // start with earning
+}
+
+/* SHOW SECTION WITH SLIDE */
+function showSection(id){
+    document.querySelectorAll('.section').forEach(sec=>sec.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* PROGRESS BAR */
+function setupProgress(cardsContainerId,progressBarId){
+    const container=document.getElementById(cardsContainerId);
+    const progress=document.getElementById(progressBarId);
+    container.addEventListener('scroll',()=>{
+        const maxScroll=container.scrollWidth-container.clientWidth;
+        const percent=(container.scrollLeft/maxScroll)*100;
+        progress.style.width=percent+'%';
+    });
+}
+
+/* CARD ANIMATION */
+function animateCards(containerId){
+    const cards=document.getElementById(containerId).querySelectorAll('.card');
+    cards.forEach((card,i)=>setTimeout(()=>{card.classList.add('show');},i*200));
+}
+</script>
+
+</body>
+</html>
