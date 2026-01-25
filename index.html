@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruian Global | Earn & Learn</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* === MINI-APP STYLES === */
+        :root {
+            --primary: #1e3a8a;
+            --secondary: #3b82f6;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --light: #f8fafc;
+            --dark: #1e293b;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--light);
+            color: var(--dark);
+            max-width: 500px;
+            margin: 0 auto;
+            height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+        }
+        
+        /* App Container */
+        .app-container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Header */
+        .app-header {
+            background: var(--primary);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .back-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: none;
+        }
+        
+        .logo {
+            font-size: 1.3rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* App Pages */
+        .app-page {
+            flex: 1;
+            overflow-y: auto;
+            display: none;
+            padding-bottom: 70px;
+        }
+        
+        .app-page.active {
+            display: block;
+        }
+        
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            border-top: 1px solid #e5e7eb;
+            z-index: 100;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #6b7280;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+            padding: 8px 15px;
+            border-radius: 10px;
+        }
+        
+        .nav-item.active {
+            color: var(--primary);
+            background: #f0f9ff;
+        }
+        
+        .nav-icon {
+            font-size: 1.2rem;
+            margin-bottom: 4px;
+        }
+        
+        /* Home Page */
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px;
+            text-align: center;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+        
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        /* Products Grid */
+        .products-grid {
+            padding: 20px;
+            display: grid;
+            gap: 15px;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            border: 2px solid #e5e7eb;
+            transition: transform 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+        
+        .product-badge {
+            background: var(--accent);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        
+        .product-price {
+            font-size: 1.5rem;
+            color: var(--success);
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+            margin: 10px 0;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            background: var(--secondary);
+            transform: scale(1.02);
+        }
+        
+        .btn-success {
+            background: var(--success);
+        }
+        
+        .btn-whatsapp {
+            background: #25D366;
+        }
+        
+        /* Google Form Container */
+        .form-container {
+            padding: 20px;
+        }
+        
+        .form-step {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: var(--dark);
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        /* Payment Info */
+        .payment-info {
+            background: #f0f9ff;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid var(--primary);
+        }
+        
+        /* Success Message */
+        .success-message {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .success-icon {
+            font-size: 4rem;
+            color: var(--success);
+            margin-bottom: 20px;
+        }
+        
+        /* Earn Page */
+        .earn-options {
+            padding: 20px;
+        }
+        
+        .earn-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+        
+        /* Profile Page */
+        .profile-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            background: white;
+            color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 15px;
+        }
+        
+        .profile-menu {
+            padding: 20px;
+        }
+        
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: white;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--dark);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .menu-icon {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+        
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e5e7eb;
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 500px) {
+            body {
+                border-radius: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- App Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <button class="back-btn" id="backBtn" onclick="goBack()">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div class="logo" id="pageTitle">
+                    <i class="fas fa-hand-holding-usd"></i>
+                    Ruian Global
+                </div>
+                <div style="width: 40px;"></div> <!-- Spacer -->
+            </div>
+        </header>
+        
+        <!-- ===== HOME PAGE ===== -->
+        <div class="app-page active" id="homePage">
+            <div class="hero">
+                <h1>Earn & Learn Platform</h1>
+                <p>Revision papers that help you pass & earn</p>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number">500+</div>
+                    <div>Students Helped</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">Ksh 2M+</div>
+                    <div>Earned</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">14</div>
+                    <div>Subjects</div>
+                </div>
+            </div>
+            
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-badge">Bestseller</div>
+                    <h3>Mathematics Papers 1 & 2</h3>
+                    <p>Complete set with marking schemes</p>
+                    <div class="product-price">Ksh 300</div>
+                    <button class="btn" onclick="buyProduct('math', 'Mathematics Papers 1 & 2', 300)">
+                        Buy Now
+                    </button>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-badge">New</div>
+                    <h3>Science Bundle</h3>
+                    <p>Physics, Chemistry, Biology</p>
+                    <div class="product-price">Ksh 800</div>
+                    <button class="btn" onclick="buyProduct('science', 'Science Bundle', 800)">
+                        Buy Now
+                    </button>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-badge">Popular</div>
+                    <h3>English Papers 1, 2, 3</h3>
+                    <p>With oral skills guide</p>
+                    <div class="product-price">Ksh 250</div>
+                    <button class="btn" onclick="buyProduct('english', 'English Papers', 250)">
+                        Buy Now
+                    </button>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-badge">Special Offer</div>
+                    <h3>ALL Form 4 Subjects</h3>
+                    <p>14 subjects, 42 papers total</p>
+                    <div class="product-price">Ksh 2,500</div>
+                    <button class="btn btn-success" onclick="buyProduct('all', 'ALL Form 4 Subjects', 2500)">
+                        Get Complete Package
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ===== EARN PAGE ===== -->
+        <div class="app-page" id="earnPage">
+            <div class="hero" style="background: linear-gradient(135deg, #059669, #10b981);">
+                <h1>Earn With Us</h1>
+                <p>Multiple ways to make money</p>
+            </div>
+            
+            <div class="earn-options">
+                <div class="earn-card">
+                    <h3><i class="fas fa-file-pdf" style="color: var(--primary);"></i> Sell Study Notes</h3>
+                    <p>Earn Ksh 5,000+/month selling your notes</p>
+                    <button class="btn" onclick="showGuide('notes')">Learn How</button>
+                </div>
+                
+                <div class="earn-card">
+                    <h3><i class="fas fa-paint-brush" style="color: var(--primary);"></i> Freelance Design</h3>
+                    <p>Earn Ksh 10,000+/month with Canva</p>
+                    <button class="btn" onclick="showGuide('design')">Learn How</button>
+                </div>
+                
+                <div class="earn-card">
+                    <h3><i class="fas fa-user-friends" style="color: var(--primary);"></i> Become Agent</h3>
+                    <p>Earn 20% commission selling our papers</p>
+                    <button class="btn" onclick="showGuide('agent')">Join Now</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ===== STORE PAGE ===== -->
+        <div class="app-page" id="storePage">
+            <div class="hero" style="background: linear-gradient(135deg, #7c3aed, #8b5cf6);">
+                <h1>Digital Store</h1>
+                <p>Products that sell 24/7</p>
+            </div>
+            
+            <div class="products-grid">
+                <div class="product-card">
+                    <h3>Budget Planner</h3>
+                    <p>Excel/Sheets template for students</p>
+                    <div class="product-price">Ksh 199</div>
+                    <button class="btn" onclick="buyProduct('planner', 'Budget Planner', 199)">Buy Now</button>
+                </div>
+                
+                <div class="product-card">
+                    <h3>Canva Templates</h3>
+                    <p>50+ editable designs</p>
+                    <div class="product-price">Ksh 499</div>
+                    <button class="btn" onclick="buyProduct('canva', 'Canva Templates', 499)">Buy Now</button>
+                </div>
+                
+                <div class="product-card">
+                    <h3>Consultation Call</h3>
+                    <p>1-on-1 earning strategy</p>
+                    <div class="product-price">Ksh 500</div>
+                    <button class="btn" onclick="buyProduct('consult', 'Consultation Call', 500)">Book Now</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ===== REVISION PAGE ===== -->
+        <div class="app-page" id="revisionPage">
+            <div class="hero" style="background: linear-gradient(135deg, #dc2626, #ef4444);">
+                <h1>Revision Papers</h1>
+                <p>Form 4 KCSE Preparation</p>
+            </div>
+            
+            <div class="form-container">
+                <div class="form-step">
+                    <h3>Choose Your Papers</h3>
+                    <p>Select subjects below:</p>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Subjects:</label>
+                        <select class="form-input" id="subjectSelect">
+                            <option value="">-- Select Subject --</option>
+                            <option value="math">Mathematics (Ksh 300)</option>
+                            <option value="english">English (Ksh 250)</option>
+                            <option value="kiswahili">Kiswahili (Ksh 250)</option>
+                            <option value="physics">Physics (Ksh 300)</option>
+                            <option value="chemistry">Chemistry (Ksh 300)</option>
+                            <option value="biology">Biology (Ksh 300)</option>
+                            <option value="science">Science Bundle (Ksh 800)</option>
+                            <option value="all">ALL Subjects (Ksh 2,500)</option>
+                        </select>
+                    </div>
+                    
+                    <button class="btn" onclick="proceedToPayment()">Continue to Payment</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ===== PROFILE PAGE ===== -->
+        <div class="app-page" id="profilePage">
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <h2>Ruian Global</h2>
+                <p>Student Entrepreneur</p>
+            </div>
+            
+            <div class="profile-menu">
+                <a href="#" class="menu-item" onclick="showPage('contact')">
+                    <div class="menu-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div>
+                        <h3>Contact Support</h3>
+                        <p>Get help with your order</p>
+                    </div>
+                </a>
+                
+                <a href="#" class="menu-item" onclick="showPage('orders')">
+                    <div class="menu-icon">
+                        <i class="fas fa-shopping-bag"></i>
+                    </div>
+                    <div>
+                        <h3>My Orders</h3>
+                        <p>View purchase history</p>
+                    </div>
+                </a>
+                
+                <a href="#" class="menu-item" onclick="showPage('settings')">
+                    <div class="menu-icon">
+                        <i class="fas fa-cog"></i>
+                    </div>
+                    <div>
+                        <h3>Settings</h3>
+                        <p>App preferences</p>
+                    </div>
+                </a>
+                
+                <a href="https://wa.me/254748121890" class="menu-item" target="_blank">
+                    <div class="menu-icon" style="color: #25D366;">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <div>
+                        <h3>WhatsApp Support</h3>
+                        <p>Instant response</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        
+        <!-- ===== PAYMENT PAGE ===== -->
+        <div class="app-page" id="paymentPage">
+            <div class="form-container">
+                <div class="form-step">
+                    <h3>Step 1: Make Payment</h3>
+                    
+                    <div class="payment-info">
+                        <h4>📱 M-Pesa Payment</h4>
+                        <p><strong>Send to:</strong> 0748 121 890</p>
+                        <p><strong>Amount:</strong> <span id="paymentAmount">Ksh 0</span></p>
+                        <p><strong>Name:</strong> Your Full Name</p>
+                    </div>
+             
