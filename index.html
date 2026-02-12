@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Ruian Global Platform</title>
+<style>
+body{
+ font-family: Arial, sans-serif;
+ background:#f2f2f2;
+ text-align:center;
+}
+h1,h2,h3{color:#222;}
+nav a{
+ display:inline-block;
+ margin:5px;
+ padding:10px 15px;
+ background:#007bff;
+ color:white;
+ text-decoration:none;
+ border-radius:5px;
+}
+nav a:hover{background:#0056b3;}
+.box{
+ background:white;
+ width:90%;
+ max-width:400px;
+ margin:20px auto;
+ padding:20px;
+ border-radius:10px;
+ text-align:left;
+}
+input, select, button{
+ width:100%;
+ padding:10px;
+ margin:5px 0;
+ border-radius:5px;
+ border:1px solid #ccc;
+}
+button{background:#007bff;color:white;border:none;}
+button:hover{background:#0056b3;cursor:pointer;}
+</style>
+</head>
+<body>
+
+<h1>Ruian Global Platform</h1>
+<p>Online Services & Digital Solutions</p>
+
+<nav>
+<a href="#order">Order</a>
+<a href="#shop">Shop</a>
+<a href="#students">Students</a>
+<a href="#payments">Payments</a>
+<a href="#support">Support</a>
+<a href="#prestige">Prestige</a>
+<a href="#admin">Admin</a>
+</nav>
+
+<hr>
+
+<!-- LOGIN SYSTEM -->
+<div class="box" id="loginSection">
+<h2>Admin Login</h2>
+<input id="adminUser" placeholder="Username">
+<input id="adminPass" type="password" placeholder="Password">
+<button onclick="adminLogin()">Login</button>
+<p id="loginMsg" style="color:red;"></p>
+</div>
+
+<!-- ORDER SECTION -->
+<div class="box" id="order">
+<h2>Place Order</h2>
+<input id="orderName" placeholder="Your Name">
+<input id="orderPhone" placeholder="Phone Number">
+<select id="orderService">
+<option>Website</option>
+<option>Revision Papers</option>
+<option>Digital Products</option>
+</select>
+<button onclick="sendOrder()">Send Order</button>
+</div>
+
+<!-- SHOP SECTION -->
+<div class="box" id="shop">
+<h2>Shop</h2>
+<h3>Website Template</h3><p>KES 500</p>
+<button onclick="shopBuy('Website Template',500)">Buy</button>
+<hr>
+<h3>Revision Pack</h3><p>KES 300</p>
+<button onclick="shopBuy('Revision Pack',300)">Buy</button>
+</div>
+
+<!-- STUDENT PORTAL -->
+<div class="box" id="students">
+<h2>Student Portal</h2>
+<input id="studentName" placeholder="Full Name">
+<input id="studentID" placeholder="Student ID">
+<button onclick="registerStudent()">Register</button>
+<h3>Downloads</h3>
+<div id="studentPortal">Register to see materials</div>
+</div>
+
+<!-- PAYMENTS -->
+<div class="box" id="payments">
+<h2>Make Payment</h2>
+<p>M-Pesa Paybill: XXXXX</p>
+<p>Account: RUIAN</p>
+<button onclick="window.open('https://wa.me/254748121890')">Confirm Payment on WhatsApp</button>
+</div>
+
+<!-- SUPPORT -->
+<div class="box" id="support">
+<h2>Customer Support</h2>
+<button onclick="window.open('https://wa.me/254748121890')">WhatsApp Support</button><br><br>
+<button onclick="window.open('https://t.me/RuianSupport')">Telegram Support</button>
+</div>
+
+<!-- PRESTIGE -->
+<div class="box" id="prestige">
+<h2>Prestige Companions</h2>
+<p>Elite Networking Platform | 18+ Only | Respect | Privacy</p>
+<button onclick="window.open('https://t.me/PrestigeCompanionsKE')">Join Telegram</button>
+</div>
+
+<!-- ADMIN PANEL -->
+<div class="box" id="admin">
+<h2>Admin Dashboard</h2>
+<div id="ordersList"><b>Orders will appear here after submission</b></div>
+</div>
+
+<script>
+// --- ADMIN LOGIN ---
+function adminLogin(){
+ let u=document.getElementById('adminUser').value;
+ let p=document.getElementById('adminPass').value;
+ if(u=="admin" && p=="1234"){
+  alert("Login Successful!");
+  document.getElementById('loginSection').style.display="none";
+ } else {
+  document.getElementById('loginMsg').innerText="Wrong username or password!";
+ }
+}
+
+// --- ORDERS ---
+function sendOrder(){
+ let n=document.getElementById('orderName').value;
+ let ph=document.getElementById('orderPhone').value;
+ let s=document.getElementById('orderService').value;
+ let orders = JSON.parse(localStorage.getItem('orders')) || [];
+ orders.push({name:n,phone:ph,service:s,date:new Date().toLocaleString()});
+ localStorage.setItem('orders',JSON.stringify(orders));
+ alert("Order saved! Opening WhatsApp...");
+ let msg="Hello Ruian,%0AName:"+n+"%0APhone:"+ph+"%0AService:"+s;
+ window.open("https://wa.me/254748121890?text="+msg);
+ displayOrders();
+}
+
+// Display Orders in Admin
+function displayOrders(){
+ let data = JSON.parse(localStorage.getItem('orders')) || [];
+ let out="";
+ data.forEach(o=>{
+  out+=o.date+" | "+o.name+" | "+o.phone+" | "+o.service+"<br>";
+ });
+ document.getElementById('ordersList').innerHTML=out;
+}
+displayOrders();
+
+// --- SHOP ---
+function shopBuy(item,price){
+ alert("Buying "+item+" for KES "+price+" → confirm via Payments section.");
+}
+
+// --- STUDENT PORTAL ---
+function registerStudent(){
+ let n=document.getElementById('studentName').value;
+ let id=document.getElementById('studentID').value;
+ if(!n||!id){alert("Fill all fields"); return;}
+ let students = JSON.parse(localStorage.getItem('students')) || [];
+ students.push({name:n,id:id});
+ localStorage.setItem('students',JSON.stringify(students));
+ document.getElementById('studentPortal').innerHTML="Welcome "+n+"! Materials:<br><a href='#'>Math Notes</a><br><a href='#'>Biology Notes</a><br><a href='#'>Physics Notes</a>";
+ alert("Student registered successfully!");
+}
+</script>
+
+</body>
+</html>
