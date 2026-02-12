@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ruian Global - App Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+:root {
+    --bg-color:#0b0b0b;
+    --text-color:white;
+    --accent:#00c3ff;
+}
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:var(--bg-color);
+    color:var(--text-color);
+}
+main{
+    padding-bottom:90px;
+}
+section{
+    padding:20px;
+    display:none;
+}
+section.active{
+    display:block;
+}
+h2,h3{
+    margin-top:0;
+}
+p, li{
+    line-height:1.6;
+}
+
+/* Home Dashboard Grid */
+#homeTopics{
+    display:none;
+    margin-top:20px;
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap:15px;
+}
+.card-btn{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    padding:20px;
+    border-radius:20px;
+    color:white;
+    cursor:pointer;
+    text-align:center;
+    font-weight:bold;
+    transition:transform 0.2s;
+}
+.card-btn:hover{
+    transform:translateY(-3px);
+}
+.card-btn img{
+    width:60px;
+    height:60px;
+    border-radius:10px;
+}
+
+/* Gradient colors for cards */
+.card-order{background:linear-gradient(135deg,#ff7e5f,#feb47b);}
+.card-shop{background:linear-gradient(135deg,#6a11cb,#2575fc);}
+.card-student{background:linear-gradient(135deg,#43cea2,#185a9d);}
+.card-payments{background:linear-gradient(135deg,#f7971e,#ffd200);}
+.card-support{background:linear-gradient(135deg,#ff4b1f,#1fddff);}
+.card-prestige{background:linear-gradient(135deg,#f953c6,#b91d73);}
+.card-admin{background:linear-gradient(135deg,#00c3ff,#005f99);}
+.card-logo{background:transparent;}
+
+/* Bottom nav */
+nav.bottom-nav{
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    background:#111;
+    display:flex;
+    justify-content:space-around;
+    padding:12px 0;
+    border-top:1px solid #333;
+}
+nav.bottom-nav button{
+    background:none;
+    border:none;
+    color:var(--accent);
+    font-size:18px;
+    font-weight:bold;
+}
+nav.bottom-nav button.active{
+    color:#ffd700;
+}
+
+/* Hamburger */
+header{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    background:#111;
+    color:white;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:10px 20px;
+    z-index:1000;
+}
+header h1{
+    font-size:1.2rem;
+}
+.hamburger{
+    font-size:1.5rem;
+    cursor:pointer;
+}
+.side-menu{
+    position:fixed;
+    top:0;
+    left:-250px;
+    width:250px;
+    height:100%;
+    background:#222;
+    color:white;
+    transition:0.3s;
+    padding:20px;
+    z-index:2000;
+}
+.side-menu.active{left:0;}
+.side-menu input, .side-menu select, .side-menu button{margin-bottom:10px;width:100%;padding:8px;border-radius:5px;border:none;}
+.side-menu a{color:var(--accent);text-decoration:none;display:block;margin:5px 0;}
+.side-menu a:hover{color:#ffd700;}
+</style>
+</head>
+<body>
+
+<header>
+    <span class="hamburger" onclick="toggleMenu()">☰</span>
+    <h1>Ruian Global</h1>
+</header>
+
+<div class="side-menu" id="menu">
+    <h3>Menu</h3>
+    <label>Language:</label>
+    <select id="langSelect" onchange="switchLang()">
+        <option value="en">English</option>
+        <option value="sw">Swahili</option>
+    </select>
+    <hr>
+    <h3>Admin Login</h3>
+    <input id="adminUser" placeholder="Username">
+    <input id="adminPass" type="password" placeholder="Password">
+    <button onclick="adminLogin()">Login</button>
+    <p id="loginMsg" style="color:red;"></p>
+    <hr>
+    <a href="#" onclick="switchTab('home')">Home</a>
+    <a href="#" onclick="switchTab('about')">About</a>
+    <a href="#" onclick="switchTab('help')">Help</a>
+    <a href="#" onclick="switchTab('adminSection')">Admin</a>
+</div>
+
+<main style="margin-top:60px;">
+    <!-- Home Tab -->
+    <section id="home" class="active">
+        <h2>🏠 Welcome to Ruian Global</h2>
+        <p>Your hub for <strong>Orders, Shop, Students, Payments, Support, Prestige</strong>.</p>
+        <div id="homeTopics">
+            <button class="card-btn card-order" onclick="showSection('order')">
+                <img src="" alt="Order"><span>Order</span>
+            </button>
+            <button class="card-btn card-shop" onclick="showSection('shop')">
+                <img src="" alt="Shop"><span>Shop</span>
+            </button>
+            <button class="card-btn card-student" onclick="showSection('students')">
+                <img src="" alt="Students"><span>Students</span>
+            </button>
+            <button class="card-btn card-payments" onclick="showSection('payments')">
+                <img src="" alt="Payments"><span>Payments</span>
+            </button>
+            <button class="card-btn card-support" onclick="showSection('support')">
+                <img src="" alt="Support"><span>Support</span>
+            </button>
+            <button class="card-btn card-prestige" onclick="showSection('prestige')">
+                <img src="" alt="Prestige"><span>Prestige</span>
+            </button>
+            <button class="card-btn card-admin" onclick="showSection('adminSection')">
+                <img src="" alt="Admin"><span>Admin</span>
+            </button>
+        </div>
+        <button class="card-btn card-logo" onclick="showHomeTopics()"><span>Enter Home</span></button>
+    </section>
+
+    <!-- Order Section -->
+    <section id="order">
+        <h2>Place Order</h2>
+        <input id="orderName" placeholder="Your Name">
+        <input id="orderPhone" placeholder="Phone Number">
+        <select id="orderService">
+            <option>Website</option>
+            <option>Revision Papers</option>
+            <option>Digital Products</option>
+        </select>
+        <button onclick="sendOrder()">Send Order</button>
+        <p><a href="#" class="internal-link" onclick="backToHomeTopics()">⬅ Back</a></p>
+    </section>
+
+    <!-- Shop Section -->
+    <section id="shop">
+        <h2>Shop</h2>
+        <h3>Website Template</h3><p>KES 500</p>
+        <button onclick="shopBuy('Website Template',500)">Buy</button>
+        <hr>
+        <h3>Revision Pack</h3><p>KES 300</p>
+        <button onclick="shopBuy('Revision Pack',300)">Buy</button>
+        <p><a href="#" class="internal-link" onclick="backToHomeTopics()">⬅ Back</a></p>
+    </section>
+
+    <!-- Students Section -->
+    <section id="students">
+        <h2>Student Portal</h2>
+        <input id="studentName" placeholder="Full Name">
+        <input id="studentID" placeholder="Student ID">
+        <button onclick="registerStudent()">Register</button>
+        <h3>Downloads</h3>
+        <div id="studentPortal">Register to see materials</div>
+        <p><a href="#" class="internal-link" onclick="backToHomeTopics()">⬅ Back</a></p>
+    </section>
+
+    <!-- Payments Section -->
+    <section id="payments">
+        <h2>Payments</h2>
+        <p>M-Pesa Paybill: XXXXX</p>
+        <p>Account: RUIAN</p>
+        <button onclick="window.open('https://wa.me/254748121890')">Confirm Payment on WhatsApp</button>
+        <p><a href="#" class="internal-link" onclick="backToHomeTopics()">⬅ Back</a></p>
+    </section>
+
+    <!-- Support Section -->
+    <section id="support">
+        <h2>Support</h2>
+        <button onclick="window.open('https://wa.me/254748121890')">WhatsApp Support</button>
+        <br><br>
+        <button onclick="window.open('https://t.me/RuianSupport')">Telegram Support</button>
+        <p><a href="#" class="internal-link" onclick="backToHomeTopics()">⬅ Back</a></p>
+    </section>
+
+    <!-- Prestige Section -->
+    <section id="prestige">
+        <h2>Prestige Companions</h2>
+        <p>Elite Networking | 18+ Only | Respect | Privacy</p>
+        <button onclick="window.open('https://t.me/PrestigeCompanionsKE')">Join Telegram</button>
+        <p><a href="#" class="internal-link" onclick="backToHomeTopics()">⬅ Back</a></p>
+    </section>
+
+    <!-- Admin Section -->
+    <section id="adminSection">
+        <h2>Admin Dashboard</h2>
+        <div id="ordersList"><b>Orders will appear here after submission</b></div>
+        <p><a href="#" class="internal-link" onclick="backToHomeTopics()">⬅ Back</a></p>
+    </section>
+
+    <!-- About & Help Tabs -->
+    <section id="about">
+        <h2>About</h2>
+        <p>Ruian Global provides online services, digital products, and educational guidance to help students, hustlers, and entrepreneurs succeed.</p>
+        <p><a href="#" class="internal-link" onclick="backToHomeTopics()">⬅ Back</a></p>
+    </section>
+
+    <section id="help">
+        <h2>Help & Contact</h2>
+        <ul>
+            <li>WhatsApp: <a href="https://wa.me/0712249656">0712249656</a></li>
+            <li>Email: info@ruian-global.com</li>
+        </ul>
+        <p><a href="#" class="internal-link" onclick="backToHomeTopics()">⬅ Back</a></p>
+    </section>
+</main>
+
+<!-- Bottom Navigation -->
+<nav class="bottom-nav">
+    <button id="nav-home" class="active" onclick="switchTab('home')">Home</button>
+    <button id="nav-about" onclick="switchTab('about')">About</button>
+    <button id="nav-help" onclick="switchTab('help')">Help</button>
+</nav>
+
+<script>
+// Hamburger toggle
+function toggleMenu(){document.getElementById('menu').classList.toggle('active');}
+
+// Switch main tabs
+function switchTab(tab){
+    document.querySelectorAll('main > section').forEach(sec=>sec.classList.remove('active'));
+    document.getElementById(tab).classList.add('active');
+    document.querySelectorAll('nav.bottom-nav button').forEach(btn=>btn.classList.remove('active'));
+    if(document.getElementById('nav-'+tab)) document.getElementById('nav-'+tab).classList.add('active');
+    if(tab==='home'){document.getElementById('homeTopics').style.display='none';}
+}
+
+// Show home topic cards
+function showHomeTopics(){document.getElementById('homeTopics').style.display='grid';}
+function showSection(id){
+    document.querySelectorAll('main > section').forEach(sec=>sec.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+}
+function backToHomeTopics(){switchTab('home');showHomeTopics();}
+
+// Admin login
+function adminLogin(){
+    let u=document.getElementById('adminUser').value;
+    let p=document.getElementById('adminPass').value;
+    if(u=="admin" && p=="1234"){
+        alert("Login Successful!");
+        showSection('adminSection');
+        toggleMenu();
+        displayOrders();
+    } else {
+        document.getElementById('loginMsg').innerText="Wrong username or password!";
+    }
+}
+
+// Orders
+function sendOrder(){
+    let n=document.getElementById('orderName').value;
+    let ph=document.getElementById('orderPhone').value;
+    let s=document.getElementById('orderService').value;
+    let orders = JSON.parse(localStorage.getItem('orders')) || [];
+    orders.push({name:n,phone:ph,service:s,date:new Date().toLocaleString()});
+    localStorage.setItem('orders',JSON.stringify(orders));
+    alert("Order saved! Opening WhatsApp...");
+    let msg="Hello Ruian,%0AName:"+n+"%0APhone:"+ph+"%0AService:"+s;
+    window.open("https://wa.me/254748121890?text="+msg);
+    displayOrders();
+}
+function displayOrders(){
+    let data = JSON.parse(localStorage.getItem('orders')) || [];
+    let out="";
+    data.forEach(o=>{out+=o.date+" | "+o.name+" | "+o.phone+" | "+o.service+"<br>";});
+    document.getElementById('ordersList').innerHTML=out;
+}
+
+// Shop
+function shopBuy(item,price){alert("Buying "+item+" for KES "+price+" → confirm via Payments section.");}
+
+// Students
+function registerStudent(){
+    let n=document.getElementById('studentName').value;
+    let id=document.getElementById('studentID').value;
+    if(!n||!id){alert("Fill all fields"); return;}
+    let students = JSON.parse(localStorage.getItem('students')) || [];
+    students.push({name:n,id:id});
+    localStorage.setItem('students',JSON.stringify(students));
+    document.getElementById('studentPortal').innerHTML="Welcome "+n+"! Materials:<br><a href='#'>Math Notes</a><br><a href='#'>Biology Notes</a><br><a href='#'>Physics Notes</a>";
+    alert("Student registered successfully!");
+}
+
+// Language switch
+function switchLang(){
+    let lang=document.getElementById('langSelect').value;
+    if(lang=='sw'){
+        document.querySelector('#home h2').innerText='🏠 Karibu Ruian Global';
+        document.querySelector('#home p').innerText='Kituo chako cha Orders, Shop, Students, Payments, Support, Prestige.';
+        document.querySelector('#about h2').innerText='Kuhusu';
+        document.querySelector('#help h2').innerText='Msaada & Mawasiliano';
+    } else {
+        document.querySelector('#home h2').innerText='🏠 Welcome to Ruian Global';
+        document.querySelector('#home p').innerText='Your hub for Orders, Shop, Students, Payments, Support, Prestige.';
+        document.querySelector('#about h2').innerText='About';
+        document.querySelector('#help h2').innerText='Help & Contact';
+    }
+}
+</script>
+</body>
+  </html>
