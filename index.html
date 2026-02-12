@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ruian Global - CEO Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+:root {
+    --bg-color:#0b0b0b;
+    --text-color:white;
+    --accent:#00c3ff;
+    --highlight:#ffd700;
+}
+* { box-sizing:border-box; }
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:var(--bg-color);
+    color:var(--text-color);
+    overflow-x:hidden;
+}
+main{padding-bottom:90px;}
+section{
+    padding:20px;
+    display:none;
+    opacity:0;
+    transform:translateX(50px);
+    transition: all 0.4s ease;
+}
+section.active{
+    display:block;
+    opacity:1;
+    transform:translateX(0);
+}
+h2,h3{margin-top:0;}
+p, li{line-height:1.6;}
+ul{margin-left:20px;}
+
+/* Cards */
+#homeTopics{
+    display:none;
+    margin-top:20px;
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap:15px;
+}
+.card-btn{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    padding:15px;
+    border-radius:20px;
+    color:white;
+    cursor:pointer;
+    text-align:center;
+    font-weight:bold;
+    transform: translateY(50px);
+    opacity:0;
+    transition: transform 0.5s ease, opacity 0.5s ease, box-shadow 0.3s;
+    border: none;
+    width: 100%;
+}
+.card-btn.show{
+    opacity:1;
+    transform: translateY(0);
+}
+.card-btn:hover{
+    transform:translateY(-6px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+}
+.card-btn:active{
+    transform: scale(0.95);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
+.card-btn span { font-size: 14px; }
+.card-order{background:linear-gradient(135deg,#ff7e5f,#feb47b);}
+.card-shop{background:linear-gradient(135deg,#6a11cb,#2575fc);}
+.card-payments{background:linear-gradient(135deg,#f7971e,#ffd200);}
+.card-support{background:linear-gradient(135deg,#ff4b1f,#1fddff);}
+.card-prestige{background:linear-gradient(135deg,#f953c6,#b91d73);}
+.card-admin{background:linear-gradient(135deg,#00c3ff,#005f99);}
+.card-logo{background:transparent; border:1px solid var(--accent);}
+
+/* Bottom nav */
+nav.bottom-nav{
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    background:#111;
+    display:flex;
+    justify-content:space-around;
+    padding:12px 0;
+    border-top:1px solid #333;
+    z-index:500;
+}
+nav.bottom-nav button{
+    background:none;
+    border:none;
+    color:var(--accent);
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+    padding: 8px 16px;
+}
+nav.bottom-nav button.active{ color:var(--highlight); }
+
+/* Header & 3-dot menu */
+header{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    background:#111;
+    color:white;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:12px 20px;
+    z-index:1000;
+    box-shadow:0 2px 8px rgba(0,0,0,0.5);
+}
+header h1{font-size:1.3rem; margin:0;}
+.menu-container{position:relative;}
+.dots{font-size:1.8rem; cursor:pointer; padding:0 10px;}
+.dropdown{
+    position:absolute;
+    right:0;
+    top:40px;
+    background:#222;
+    color:white;
+    border-radius:8px;
+    padding:15px;
+    display:none;
+    min-width:180px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.5);
+    z-index:1001;
+}
+.dropdown.show{display:block;}
+.dropdown input, .dropdown select, .dropdown button{width:100%; margin-bottom:10px; padding:8px; border-radius:5px; border:none;}
+.dropdown button{background:var(--accent); color:white; cursor:pointer;}
+.dropdown a{display:block; color:var(--accent); text-decoration:none; margin:5px 0; padding:5px;}
+.dropdown a:hover{color:var(--highlight); background:#333;}
+
+/* Prestige section */
+#prestige input, #prestige button{
+    width:100%; padding:10px; margin:5px 0; border-radius:8px; border:none;
+}
+#prestige button{
+    background:var(--accent); color:white; font-weight:bold; cursor:pointer; transition:0.3s;
+}
+#prestige button:hover{background:var(--highlight); color:#000;}
+.profile-card{
+    min-width:160px;
+    background:#222;
+    border-radius:15px;
+    padding:10px;
+    text-align:center;
+    color:white;
+    flex-shrink:0;
+}
+.profile-card img{width:100%; border-radius:10px; height:150px; object-fit:cover; background:#333;}
+.profile-card h4{margin:5px 0;}
+.profile-card p{font-size:0.85rem; margin:5px 0;}
+.profile-card button{background:#00c3ff; color:white; font-weight:bold; width:100%; margin-top:5px;}
+.profile-card button:hover{background:#ffd700; color:#000;}
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Ruian Global</h1>
+    <div class="menu-container">
+        <span class="dots" id="dotsMenu">⋮</span>
+        <div class="dropdown" id="dropdownMenu">
+            <label>Language:</label>
+            <select id="langSelect">
+                <option value="en">English</option>
+                <option value="sw">Swahili</option>
+            </select>
+            <hr>
+            <div id="adminSectionMenu">
+                <h4>Admin Login</h4>
+                <input id="adminUser" placeholder="Username">
+                <input id="adminPass" type="password" placeholder="Password">
+                <button type="button" id="adminLoginBtn">Login</button>
+                <p id="adminLoginMsg" style="color:red;"></p>
+            </div>
+            <hr>
+            <a href="#" id="menuHome">Home</a>
+            <a href="#" id="menuAbout">About</a>
+            <a href="#" id="menuHelp">Help</a>
+        </div>
+    </div>
+</header>
+
+<main style="margin-top:70px;">
+  <!-- Home -->
+  <section id="home" class="active">
+    <h2>🏠 Welcome to Ruian Global</h2>
+    <p>Your hub for <strong>Orders, Shop, Payments, Support, Prestige</strong>.</p>
+    <div id="homeTopics">
+      <button type="button" class="card-btn card-order" data-section="order"><span>🛒</span><span>Order</span></button>
+      <button type="button" class="card-btn card-shop" data-section="shop"><span>🏪</span><span>Shop</span></button>
+      <button type="button" class="card-btn card-payments" data-section="payments"><span>💰</span><span>Payments</span></button>
+      <button type="button" class="card-btn card-support" data-section="support"><span>🎧</span><span>Support</span></button>
+      <button type="button" class="card-btn card-prestige" data-section="prestige"><span>👑</span><span>Prestige</span></button>
+      <button type="button" class="card-btn card-admin" data-section="adminSection"><span>⚙️</span><span>Admin</span></button>
+    </div>
+    <button type="button" class="card-btn card-logo" id="enterHomeBtn"><span>🚪 Enter Home</span></button>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <h2>ℹ️ About Us</h2>
+    <p>Ruian Global empowers hustlers, professionals, entrepreneurs, and investors to achieve financial freedom and growth.</p>
+    <button type="button" onclick="backToHomeTopics()">⬅ Back</button>
+  </section>
+
+  <!-- Help -->
+  <section id="help">
+    <h2>📞 Contact & Help</h2>
+    <ul>
+      <li>WhatsApp: <a href="https://wa.me/0712249656">0712249656</a></li>
+      <li>Email: info@ruian-global.com</li>
+    </ul>
+    <button type="button" onclick="backToHomeTopics()">⬅ Back</button>
+  </section>
+
+  <!-- Prestige Companions -->
+  <section id="prestige">
+    <h2>👑 Prestige Companions</h2>
+    <p>Join our exclusive platform to connect, network, and explore meaningful connections.</p>
+
+    <div id="prestigeAuth">
+        <button type="button" onclick="showPrestigeForm('signup')">Sign Up</button>
+        <button type="button" onclick="showPrestigeForm('login')">Login</button>
+
+        <div id="signupForm" style="display:none; margin-top:15px;">
+            <input type="text" id="signName" placeholder="Full Name">
+            <input type="number" id="signAge" placeholder="Age">
+            <input type="email" id="signEmail" placeholder="Email">
+            <input type="password" id="signPass" placeholder="Password">
+            <input type="password" id="signConfirm" placeholder="Confirm Password">
+            <button type="button" onclick="prestigeSignUp()">Create Account</button>
+            <p id="signupMsg" style="color:red;"></p>
+        </div>
+
+        <div id="loginForm" style="display:none; margin-top:15px;">
+            <input type="email" id="loginEmail" placeholder="Email">
+            <input type="password" id="loginPass" placeholder="Password">
+            <button type="button" onclick="prestigeLogin()">Login</button>
+            <p id="prestigeLoginMsg" style="color:red;"></p>
+        </div>
+
+        <p style="margin-top:10px; font-size:0.85rem;">
+            <a href="#" onclick="showPrestigeTerms()">Terms & Conditions</a> | 
+            <a href="#" onclick="showPrestigePrivacy()">Privacy Policy</a>
+        </p>
+    </div>
+
+    <div id="prestigeTerms" style="display:none;">
+        <h3>📜 Terms & Conditions</h3>
+        <p>By joining Prestige Companions, you agree to engage ethically with members and respect privacy.</p>
+        <button type="button" onclick="backToPrestigeAuth()">⬅ Back</button>
+    </div>
+
+    <div id="prestigePrivacy" style="display:none;">
+        <h3>🔒 Privacy Policy</h3>
+        <p>Personal info is used only for matching. No third-party sharing without consent.</p>
+        <button type="button" onclick="backToPrestigeAuth()">⬅ Back</button>
+    </div>
+
+    <div id="prestigeProfiles" style="display:none; margin-top:20px;">
+        <h3>👀 Explore Members</h3>
+        <div id="profileCards" style="display:flex; overflow-x:auto; gap:15px; padding:10px;"></div>
+        <button type="button" onclick="prestigeLogout()">Logout</button>
+    </div>
+  </section>
+
+  <!-- Admin Section -->
+  <section id="adminSection">
+    <h2>⚙️ Admin Panel</h2>
+    <p>Analytics, user management, and system controls. (Demo only)</p>
+    <button type="button" onclick="backToHomeTopics()">⬅ Back</button>
+  </section>
+
+  <!-- Placeholder sections -->
+  <section id="order">
+    <h2>📦 Order Management</h2>
+    <p>View and manage customer orders. (Demo content)</p>
+    <button type="button" onclick="backToHomeTopics()">⬅ Back</button>
+  </section>
+
+  <section id="shop">
+    <h2>🛍️ Shop</h2>
+    <p>Browse products and manage inventory. (Demo content)</p>
+    <button type="button" onclick="backToHomeTopics()">⬅ Back</button>
+  </section>
+
+  <section id="payments">
+    <h2>💰 Payments</h2>
+    <p>Track transactions and invoices. (Demo content)</p>
+    <button type="button" onclick="backToHomeTopics()">⬅ Back</button>
+  </section>
+
+  <section id="support">
+    <h2>🛠️ Support</h2>
+    <p>Customer support tickets and inquiries. (Demo content)</p>
+    <button type="button" onclick="backToHomeTopics()">⬅ Back</button>
+  </section>
+
+</main>
+
+<nav class="bottom-nav">
+    <button type="button" id="nav-home" class="active" data-tab="home">Home</button>
+    <button type="button" id="nav-about" data-tab="about">About</button>
+    <button type="button" id="nav-help" data-tab="help">Help</button>
+</nav>
+
+<script>
+let users = [];
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('homeTopics').style.display = 'none';
+    document.getElementById('signupForm').style.display = 'none';
+    document.getElementById('loginForm').style.display = 'none';
+    document.getElementById('prestigeTerms').style.display = 'none';
+    document.getElementById('prestigePrivacy').style.display = 'none';
+    document.getElementById('prestigeProfiles').style.display = 'none';
+    switchLang();
+
+    const dots = document.getElementById('dotsMenu');
+    const dropdown = document.getElementById('dropdownMenu');
+
+    dots.addEventListener('click', function(e){ e.stopPropagation(); dropdown.classList.toggle('show'); });
+    document.addEventListener('click', function(e){ if(!dropdown.contains(e.target) && e.target!==dots) dropdown.classList.remove('show'); });
+    document.getElementById('langSelect').addEventListener('change', switchLang);
+    document.getElementById('adminLoginBtn').addEventListener('click', adminLogin);
+
+    document.getElementById('menuHome').addEventListener('click', function(e){ e.preventDefault(); switchTab('home'); dropdown.classList.remove('show'); });
+    document.getElementById('menuAbout').addEventListener('click', function(e){ e.preventDefault(); switchTab('about'); dropdown.classList.remove('show'); });
+    document.getElementById('menuHelp').addEventListener('click', function(e){ e.preventDefault(); switchTab('help'); dropdown.classList.remove('show'); });
+
+    document.querySelectorAll('#homeTopics .card-btn').forEach(btn=>{
+        btn.addEventListener('click', function(){ showSection(this.dataset.section); });
+    });
+
+    document.getElementById('enterHomeBtn').addEventListener('click', showHomeTopics);
+
+    document.querySelectorAll('.bottom-nav button').forEach(btn=>{
+        btn.addEventListener('click', function(){ switchTab(this.dataset.tab); });
+    });
+});
+
+function showHomeTopics(){
+    const cards = document.querySelectorAll('#homeTopics .card-btn');
+    document.getElementById('homeTopics').style.display='grid';
+    cards.forEach((c,i)=>setTimeout(()=>c.classList.add('show'), i*100));
+}
+
+function backToHomeTopics(){ switchTab('home'); showHomeTopics(); }
+
+function switchTab(tab){
+    document.querySelectorAll('main > section').forEach(sec=>sec.classList.remove('active'));
+    const target=document.getElementById(tab);
+    if(target) target.classList.add('active');
+    document.querySelectorAll('nav.bottom-nav button').forEach(btn=>btn.classList.remove('active'));
+    const navBtn=document.getElementById('nav-'+tab);
+    if(navBtn) navBtn.classList.add('active');
+}
+
+function showSection(id){
+    document.querySelectorAll('main > section').forEach(sec=>sec.classList.remove('active'));
+    const target=document.getElementById(id);
+    if(target) target.classList.add('active');
+}
+
+function adminLogin(){
+    let u=document.getElementById('adminUser').value;
+    let p=document.getElementById('adminPass').value;
+    if(u==="admin" && p==="1234"){
+        alert("Login Successful!"); showSection('adminSection'); document.getElementById('dropdownMenu').classList.remove('show'); document.getElementById('adminLoginMsg').innerText="";
+        document.getElementById('adminUser').value=""; document.getElementById('adminPass').value="";
+    }else{document.getElementById('adminLoginMsg').innerText="Wrong username or password!";}
+}
+
+function switchLang(){
+    let lang=document.getElementById('langSelect').value;
+    let homeTitle=document.querySelector('#home h2');
+    let homeText=document.querySelector('#home p');
+    if(lang==='sw'){ homeTitle.innerText='🏠 Karibu Ruian Global'; homeText.innerText='Kituo chako cha Orders, Shop, Payments, Support, Prestige.'; }
+    else{ homeTitle.innerText='🏠 Welcome to Ruian Global'; homeText.innerText='Your hub for Orders, Shop, Payments, Support, Prestige.'; }
+}
+
+function showPrestigeForm(f){
+    document.getElementById('signupForm').style.display = f==='signup'?'block':'none';
+    document.getElementById('loginForm').
